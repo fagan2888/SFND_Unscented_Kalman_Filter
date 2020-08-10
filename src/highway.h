@@ -20,7 +20,7 @@ public:
 	// Parameters 
 	// --------------------------------
 	// Set which cars to track with UKF
-	std::vector<bool> trackCars = {true,true,true};
+	std::vector<bool> trackCars = {true,false,false};
 	// Visualize sensor measurements
 	bool visualize_lidar = true;
 	bool visualize_radar = true;
@@ -130,8 +130,11 @@ public:
 				VectorXd gt(4);
 				gt << traffic[i].position.x, traffic[i].position.y, traffic[i].velocity*cos(traffic[i].angle), traffic[i].velocity*sin(traffic[i].angle);
 				tools.ground_truth.push_back(gt);
+				// calls lidar ProcessMeasurement
 				tools.lidarSense(traffic[i], viewer, timestamp, visualize_lidar);
+				// calls radar ProcessMeasurement
 				tools.radarSense(traffic[i], egoCar, viewer, timestamp, visualize_radar);
+				// calls ukf prediction
 				tools.ukfResults(traffic[i],viewer, projectedTime, projectedSteps);
 				VectorXd estimate(4);
 				double v  = traffic[i].ukf.x_(2);

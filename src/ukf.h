@@ -4,6 +4,8 @@
 #include "Eigen/Dense"
 #include "measurement_package.h"
 
+#include <iostream>
+
 class UKF {
  public:
   /**
@@ -41,6 +43,10 @@ class UKF {
    */
   void UpdateRadar(MeasurementPackage meas_package);
 
+  /**
+   * Helper function to normalize between -PI and PI when working with angles
+   */
+  double Normalize(double angle);
 
   // initially set to false, set to true in first call of ProcessMeasurement
   bool is_initialized_;
@@ -95,6 +101,11 @@ class UKF {
 
   // Sigma point spreading parameter
   double lambda_;
+
+  Eigen::MatrixXd R_lidar_;
+  Eigen::MatrixXd R_radar_;
+  Eigen::MatrixXd Q_;
+  Eigen::MatrixXd H_lidar_;
 };
 
 #endif  // UKF_H
