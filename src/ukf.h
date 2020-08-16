@@ -67,7 +67,7 @@ class UKF {
   Eigen::MatrixXd Xsig_pred_;
 
   // time when the state is true, in us
-  long long time_us_;
+  double time_us_;
 
   // Process noise standard deviation longitudinal acceleration in m/s^2
   double std_a_;
@@ -102,10 +102,11 @@ class UKF {
   // Sigma point spreading parameter
   double lambda_;
 
+private:
   Eigen::MatrixXd R_lidar_;
   Eigen::MatrixXd R_radar_;
-  Eigen::MatrixXd Q_;
   Eigen::MatrixXd H_lidar_;
+
 };
 
 #endif  // UKF_H
